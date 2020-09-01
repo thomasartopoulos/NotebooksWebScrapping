@@ -1,0 +1,23 @@
+from wordcloud import WordCloud, STOPWORDS
+from PIL import Image
+import urllib
+import requests
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+#Insertamos las palabras y la máscara sobre la cual querés armar el WordCloud (Se recomienda alojar la imágen en un servidor fiable)
+palabras = 'access guest guest apartment area area bathroom bed bed bed bed bed bedroom block coffee coffee coffee coffee entrance entry francisco free garden guest home house kettle kettle kitchen kitchen kitchen kitchen kitchen kitchenliving located microwave neighborhood new park parking place privacy private queen room san separate seperate shared space space space street suite time welcome'
+mascara = np.array(Image.open(requests.get('http://www.clker.com/cliparts/O/i/x/Y/q/P/yellow-house-hi.png', stream=True).raw))
+
+# Esta función toma tu texto y la máscara
+def generate_wordcloud(words, mask):
+    word_cloud = WordCloud(width = 512, height = 512, background_color='white', stopwords=STOPWORDS, mascara=mascara).generate(palabras)
+    plt.figure(figsize=(10,8),facecolor = 'white', edgecolor='blue')
+    plt.imshow(word_cloud)
+    plt.axis('off')
+    plt.tight_layout(pad=0)
+    plt.show()
+    
+#ejecuta la siguiente función para generar el wordcloud
+generate_wordcloud(palabras, mascara)
